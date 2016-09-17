@@ -1,0 +1,259 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script type="text/javascript">
+      var arr=[];
+      var sum=0;
+      var newHTML = [];
+      $(document).ready(function(){
+
+$(".quantity").val(1);
+
+$(".addtocart").click(function(){
+    var quantity = $(this).closest('tr').find('.quantity').val();
+    var price = parseInt($(this).closest('tr').find('td:eq(5)').text(), 10);
+    sum=sum+(price*quantity);
+    $("#sum").html('Total:'+sum+'<br/>');
+    var append = $(this).closest('tr').find('td:eq(0)').text();
+while(quantity>0) {
+    arr.push(append);
+    $("#test").append("<tr><td>"+ append + '</td><td>' + price + '</td><td><a href="#" class="remove">Remove</a></td></tr>');
+    quantity--;
+}
+});
+
+$(document).on('click','a.remove',function(){
+    var remove = $(this).closest('tr').find('td:eq(0)').text();
+    var index = arr.indexOf(remove);
+    if (index > -1) {
+    arr.splice(index, 1);
+}
+    $(this).closest('tr').remove();
+
+    var remove_price = parseInt($("td").filter(function() {
+    return $(this).text() == remove;
+}).closest('tr').find('td:eq(5)').text(),10);
+    sum=sum-remove_price;
+    $("#sum").html('Total:'+sum+'<br/>');
+});
+$("#show").click(function(){
+alert(arr);
+              $.ajax({
+              type: 'POST',
+              datatype: 'json',
+              url:'{% url "curr_order" %}',
+              data: {'arr[]': arr},
+              success:function(data){
+                  $("#message").html("Your orders have been placed. Please Wait.")
+              },
+              error: function(){
+                 alert("Error");
+              }
+          });
+
+
+
+           arr =[];
+            $("li").remove();
+
+    var is_ready = function(){
+    var x =10;
+    $.ajax({
+        type:'POST',
+        datatype:'json',
+        data:{'x':x},
+        url:'{% url "is_ready" %}',
+        success:function(data){
+            if(data==1) {
+                window.location.href = '{% url "thank_you" %}';
+
+            }
+
+        }
+    });
+};
+    setInterval(is_ready, 6000);
+
+    });
+
+      });
+  </script>
+</head>
+<body>
+  <nav class="red accent-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">FREPA</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+    <table class="responsive-table">
+    <table class="highlight">
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Content</th>
+              <th data-field="price">Preparation</th>
+              <th data-field="price">Category</th>
+              <th data-field="price">Comment</th>
+              <th data-field="price">Price</th>
+              <th data-field="price">Quantity</th>
+          </tr>
+        </thead>
+
+        <tbody>
+{% for menus in menu %}
+<tr><td>{{ menus.name }}</td><td>{{ menus.content }}</td><td>{{ menus.preparation }}</td><td>{{ menus.category }}</td><td>{{ menus.comment }}</td><td>{{ menus.price }}</td><td><input type="number" name="quantity" class="quantity" min="1" max="99"/></td></td><td><a href="#" class = "addtocart">Add to cart</a></td></tr>
+{% endfor %}
+        </tbody>
+      </table>
+      </table>
+<input type ="submit" class="waves-effect waves-light btn"padding="25px" value="Place Orders" id = "show">
+
+<p id="message"></p>
+<a href="{% url 'login' '1'%}" class="waves-effect waves-light btn"padding="25px">Logout</a>
+<p id="ready"></p>
+  <table id="test">
+      <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Remove</th>
+      </tr>
+  </table>
+  <p id="sum"></p>
+
+
+{% if first_time %}
+  {{ norec }}
+
+{% else %}
+<h2>Your Favourite food</h2>
+
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_rec }}" height="400px">
+              <span class="card-title">{{ recommend }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_rec }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+
+
+<br/>
+
+<h2>Top Selling</h2>
+
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_top }}" height="400px">
+              <span class="card-title">{{ top_selling }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_top }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+
+
+
+<br/>
+<h2>Hot {{ print_key }}</h2>
+
+
+{% if breakfast %}
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_time }}" height="400px">
+              <span class="card-title">{{ breakfast }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_time }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+    {% else %}
+    {{ message }}
+{% endif %}
+
+
+
+<br/>
+<h3> You may also like:</h3>
+<div class="row">
+<div class="col s12 m12">
+{% for key,value in list1.items %}
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ value.image }}" height="400px">
+              <span class="card-title">{{ key }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ value.comment }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </div>
+{% endfor %}
+</div>
+</div>
+{% endif %}
+
+
+
+
+
+  <!--  Scripts-->
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+
+</body>
+</html>

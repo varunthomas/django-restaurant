@@ -1,0 +1,97 @@
+{%  load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{%  static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+   <nav class="red accent-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">FREPA</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+    <div class="row">
+    <h2 class="center">REGISTER</h2>
+    <form method="POST" class="col s12">{% csrf_token %}
+        <div class="row">
+        <div class="input-field col s6">
+          {{ form.username }}
+          <label for="user_name">Username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          {{ form.email }}
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          {{ form.password }}
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          {{ form.firstname }}
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+          {{ form.lastname }}
+          <label for="last_name">Last Name</label>
+        </div>
+        <div class="input-field col s6">
+          <i class="material-icons prefix">phone</i>
+          {{ form.mobilenumber }}
+          <label for="icon_telephone">Telephone</label>
+        </div>
+      </div>
+
+    {% for choice in form.typeofuser %}
+        <p>
+
+{{ choice.tag }}
+        <label for = "id_typeofuser_{{ forloop.counter0 }}">{{ choice.choice_label }}</label>
+        </p>
+{% endfor %}
+
+        <button type="submit" class="waves-effect waves-light btn" padding="25px">Register</button>
+    </form>
+     </div>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+  <!--  Scripts-->
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+
+</body>
+</html>

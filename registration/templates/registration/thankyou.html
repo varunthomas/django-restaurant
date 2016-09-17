@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank you</title>
+  <link href="{% static 'registration/jquery.rating.css' %}" rel="stylesheet"/>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="{% static 'registration/jquery.rating.pack.js' %}"></script>
+  <script>
+      $(document).ready(function(){
+          $('#submit').click(function(){
+              var arr=[];
+              $('input[type="radio"]:checked').each(function(){
+                  arr.push($(this).val());
+              });
+              $.ajax({
+                  type: 'POST',
+                  datatype: 'json',
+                  url:'{% url "complete" %}',
+                  data: {'arr[]': arr},
+                  success:function(data){
+                      $('#complete').html("Thank you! Visit again.");
+                      $('#submit').attr('disabled','disabled');
+                  },
+                  error: function(){
+                     alert("Error");
+                  }
+             });
+          });
+      });
+  </script>
+</head>
+<body>
+
+<p>Your order is ready</p>
+
+
+
+<h1>Your rating</h1>
+{% for order in unique_orders %}
+    <br/>
+{{ order }}
+
+<input name="radio[{{ forloop.counter }}]" type="radio" class="star" value="1"/>
+<input name="radio[{{ forloop.counter }}]" type="radio" class="star" value="2"/>
+<input name="radio[{{ forloop.counter }}]" type="radio" class="star" value="3"/>
+<input name="radio[{{ forloop.counter }}]" type="radio" class="star" value="4"/>
+<input name="radio[{{ forloop.counter }}]" type="radio" class="star" value="5"/>
+
+<br/>
+{% endfor %}
+<input type="button" id="submit" value="Submit"/>
+<a href="{% url 'login' '1'%}">Logout</a>
+<p id="complete"></p>
+</body>
+</html>

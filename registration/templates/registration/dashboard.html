@@ -1,0 +1,137 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <style>
+        .customalign{
+            left:25%;width:50%;height:50%;top:25%;position:absolute;
+        }
+    </style>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+    var restaurantAutocompleteUrl = "{% url 'get_restaurant' %}";
+        $(document).ready(function(){
+            $('select').material_select();
+        });
+</script>
+    <script src="{% static 'registration/jqueryre.js' %}"></script>
+</head>
+<body style="background-color: #F5F3EE;">
+
+  <nav>
+    <div class="nav-wrapper red accent-2">
+      <a href="#" class="brand-logo">FREPA</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">Hi {{ firstname }}</a></li>
+        <li><a href="{% url 'login' '1'%}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+{% if not typeofuser %}
+    <div class="row white customalign valign-wrapper z-depth-3">
+    <form method="post" action="{% url 'table' %}" class="valign col s9">{% csrf_token %}
+        <h5>Restaurant Finder</h5>
+    <div class="row">
+    <div class="input-field col s9">
+    <input placeholder="Type in a restaurant" id="tags" name="tags"/>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col s4">
+    <input type="submit" class="waves-effect waves-light btn" value="Continue">
+        </div>
+        </div>
+    </form>
+    </div>
+{% else %}
+
+<div class="row">
+<form method="POST" class="col s12" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+        <div class="input-field col s6">
+{{ form.name }}
+            <label for="id_name">Name of food</label>
+     </div>
+     </div>
+
+    <div class="row">
+<div class="input-field col s2">
+    {{ form.time }}
+    <label>Time</label>
+  </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s2">
+            {{ form.category }}
+            <label>Category</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s2">
+            {{ form.content }}
+            <label for="id_content">Content</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s2">
+            {{ form.preparation }}
+            <label for="id_preparation">Preparation</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form.comment }}
+            <label for="id_comment">Comment</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form.price }}
+            <label for="id_price">Price</label>
+        </div>
+    </div>
+
+        <div class="row">
+        <div class="file-field input-field col s6">
+              <div class="btn">
+        <span>File</span>
+            {{ form.image }}
+                  </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+        </div>
+    </div>
+
+    <button type="submit" class="waves-effect waves-light btn">Add Menu</button>
+    </form>
+{{ msg }}
+    </div>
+
+
+<a href="{% url 'rgraph' %}">Graph</a>
+{% endif %}
+
+
+
+  <!--  Scripts-->
+
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'registration/stickyfooter.css' %}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{% static 'registration/index.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper red accent-2">
+        <div class="container">
+      <a href="#" class="brand-logo">FREPA</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Donate</a></li>
+      </ul>
+    </div>
+        </div>
+  </nav>
+
+<div class="parallax-container valign-wrapper">
+      <div class="parallax"><img src="{% static "registration/images/food.jpg" %}"></div>
+      <div class="center-block valign">
+<a class="waves-effect waves-light btn btn-large" style="margin-bottom: 20px" href="{% url 'login' '0' %}"><i class="material-icons left">face</i>login</a><br>
+<a class="waves-effect waves-light btn btn-large" href="{% url 'register' %}"><i class="material-icons left">fingerprint</i>register</a>
+    </div>
+</div>
+
+<div class="container">
+
+
+
+
+
+    <div class="row">
+
+      <div class="col s4">
+          <div class="center">
+        <p><i class="medium material-icons">web</i></p>
+        <h4>Order</h4>
+        <p>Order your food on the go so that you dont need to wait for your food anymore. </p>
+      </div>
+          </div>
+
+      <div class="col s4">
+          <div class="center">
+        <p><i class="medium material-icons">trending_up</i></p>
+        <h4>Profit</h4>
+        <p>Analyse the sales of your food to find out your best product </p>
+      </div>
+          </div>
+
+              <div class="col s4">
+          <div class="center">
+        <p><i class="medium material-icons">grade</i></p>
+        <h4>Recommend</h4>
+        <p>We will recommend you some great food based on your taste </p>
+      </div>
+          </div>
+
+
+    </div>
+
+</div>
+
+        <footer class="page-footer red accent-2">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">FREPA</h5>
+                <p class="grey-text text-lighten-4">FREPPA (Food Recommendation Engine and Profit Advisor is the main project of Group 18.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">About us</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Donate</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright red accent-3">
+            <div class="container">
+            © 2014 Group 18 - All rights reserved
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+
+</body>
+</html>

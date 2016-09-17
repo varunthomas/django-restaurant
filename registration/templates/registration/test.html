@@ -1,0 +1,137 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{%  static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script>
+      $(document).ready(function(){
+        $('.materialboxed').materialbox();
+      });
+    </script>
+
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper red accent-2">
+      <a href="#" class="brand-logo">FREPA</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">Hi {{ uname }}</a></li>
+        <li><a href="{% url 'login' '1'%}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+<h2>Your Favourite food</h2>
+
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_rec }}" height="400px">
+              <span class="card-title">{{ recommend }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_rec }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+
+
+<br/>
+
+<h2>Top Selling</h2>
+
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_top }}" height="400px">
+              <span class="card-title">{{ top_selling }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_top }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+
+
+
+<br/>
+<h2>Hot {{ print_key }}</h2>
+
+
+{% if breakfast %}
+<div class="row">
+<div class="col s12 m12">
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ img_time }}" height="400px">
+              <span class="card-title">{{ breakfast }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ com_time }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+</div>
+</div>
+    {% else %}
+    {{ message }}
+{% endif %}
+
+
+
+<br/>
+<h3> You may also like:</h3>
+<div class="row">
+<div class="col s12 m12">
+{% for key,value in list1.items %}
+        <div class="col s4 m4">
+          <div class="card medium hoverable">
+            <div class="card-image">
+              <img class="materialboxed" src="../../../media/{{ value.image }}" height="400px">
+              <span class="card-title">{{ key }}</span>
+            </div>
+            <div class="card-content">
+              <p>{{ value.comment }}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+{% endfor %}
+</div>
+</div>
+
+
+
+
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+
+</body>
+</html>

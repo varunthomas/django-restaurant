@@ -1,0 +1,87 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".done").click(function(){
+                var item =$(this).closest('tr').find('td:eq(0)').text();
+                $("#print").html(item);
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'json',
+                    url: '{% url "getOrder" %}',
+                    data:{'item': item}
+                });
+                $(this).parent().hide();
+            });
+            setTimeout(function(){
+                location = ''
+            },3000)
+        });
+
+    </script>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper red accent-2">
+      <a href="#" class="brand-logo">FREPA</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">Hi Chef</a></li>
+        <li><a href="{% url 'login' '1'%}">Logout</a></li>
+      </ul>
+
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Hi Chef</a></li>
+        <li><a href="{% url 'login' '1'%}">Logout</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+
+
+    <table class="responsive-table">
+    <table class="highlight">
+        <thead>
+          <tr>
+              <th data-field="id">Order</th>
+              <th data-field="name">Table Number</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for order in orders %}
+          <tr>
+            <td>{{ order.food_item }}</td>
+            <td>{{ order.table_num }}</td>
+            <td><a href="#" class ="done">Done</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      </table>
+
+
+
+
+
+<p id ="print"></p>
+
+  <!--  Scripts-->
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+</body>
+</html>

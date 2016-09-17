@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'registration/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'registration/style2.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+  <nav class="red accent-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">FREPA</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Restaurant Manager</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <h5 class="center">LOGIN</h5>
+<div class="row" style="margin-left: 30%">
+<form method="POST" class="col s9">{% csrf_token %}
+        {% for fields in form %}
+            <div class="row">
+          <div class="input-field col s9">
+                    <label>{{ fields.label }}</label>
+                        {{ fields }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col s6">
+        <button type="submit" class="waves-effect waves-light btn col s12"padding="25px">Login</button>
+        </div>
+            <div class="col s2">
+                <a href="{% url 'register' %}">Register</a>
+            </div>
+            </div>
+    </form>
+</div>
+
+
+{{ error }}
+{{ logged_out_message }}
+
+
+
+  <!--  Scripts-->
+  <script src="{% static 'registration/login/bump.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'registration/login/materialize.js' %}"></script>
+  <script src="{% static 'registration/login/init.js' %}"></script>
+
+</body>
+</html>
